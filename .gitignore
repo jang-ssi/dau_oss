@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# DORA 수집 결과 (아티팩트로만 보관)
+/dora-metrics.json

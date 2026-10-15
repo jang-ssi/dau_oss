@@ -1,0 +1,62 @@
+name: DORA Metrics
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # 매주 월요일 00:00 UTC (한국 시간 09:00)
+  workflow_dispatch:
+    inputs:
+      demo:
+        description: '샘플 데이터로 시안 생성 (true/false)'
+        default: 'false'
+
+permissions:
+  contents: write
+  pull-requests: read
+  issues: read
+  deployments: read
+
+concurrency:
+  group: dora-metrics
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Collect DORA metrics
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          DORA_DEMO: ${{ github.event.inputs.demo == 'true' && '1' || '0' }}
+        run: node scripts/dora.mjs
+
+      - name: Upload JSON artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dora-metrics-${{ github.run_id }}
+          path: |
+            dora-metrics.json
+            docs/dora/report.md
+            docs/dora/dashboard.svg
+          retention-days: 90
+
+      - name: Write job summary
+        run: cat docs/dora/report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit weekly report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md docs/dora
+          if git diff --cached --quiet; then
+            echo "변경 사항 없음"
+          else
+            git commit -m "chore: DORA 주간 보고서 갱신 [skip ci]"
+            git push
+          fi

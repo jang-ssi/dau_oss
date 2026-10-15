@@ -1,0 +1,16 @@
+[
+  {
+    "week": "2026-10-08",
+    "from": "2026-10-08T10:33:07.265Z",
+    "to": "2026-10-15T10:33:07.265Z",
+    "leadTimeHours": null,
+    "deploymentFrequency": 0,
+    "changeFailureRate": null,
+    "mttrHours": null,
+    "samples": {
+      "prs": 0,
+      "deployments": 0,
+      "incidents": 0
+    }
+  }
+]
