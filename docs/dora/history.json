@@ -1,8 +1,8 @@
 [
   {
     "week": "2026-10-08",
-    "from": "2026-10-08T10:33:07.265Z",
-    "to": "2026-10-15T10:33:07.265Z",
+    "from": "2026-10-08T10:35:11.536Z",
+    "to": "2026-10-15T10:35:11.536Z",
     "leadTimeHours": null,
     "deploymentFrequency": 0,
     "changeFailureRate": null,
