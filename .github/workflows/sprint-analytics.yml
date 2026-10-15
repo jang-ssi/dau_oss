@@ -1,0 +1,54 @@
+name: Sprint Analytics
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 매일 09:00(한국 시간)
+  workflow_dispatch:
+    inputs:
+      demo:
+        description: '샘플 데이터로 시안 생성 (true/false)'
+        default: 'false'
+
+permissions:
+  contents: write
+  issues: read
+
+concurrency:
+  group: sprint-analytics
+  cancel-in-progress: false
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Cycle Time / Velocity / Burndown 분석
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          SPRINT_DEMO: ${{ github.event.inputs.demo == 'true' && '1' || '0' }}
+        run: node scripts/sprint-analytics.mjs
+
+      - name: Upload JSON artifact
+        if: hashFiles('sprint-metrics.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint-metrics-${{ github.run_id }}
+          path: sprint-metrics.json
+          retention-days: 90
+
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/sprint
+          if git diff --cached --quiet; then
+            echo "변경 사항 없음"
+          else
+            git commit -m "chore: 스프린트 분석 리포트 갱신 [skip ci]"
+            git push
+          fi

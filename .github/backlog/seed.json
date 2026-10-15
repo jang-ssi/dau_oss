@@ -1,0 +1,40 @@
+{
+  "labels": [
+    { "name": "type: feature", "color": "1d76db", "description": "새 기능" },
+    { "name": "type: bug", "color": "d73a4a", "description": "버그" },
+    { "name": "type: docs", "color": "0075ca", "description": "문서" },
+    { "name": "type: chore", "color": "cfd3d7", "description": "설정·환경·리팩터링" },
+    { "name": "priority: P0", "color": "b60205", "description": "즉시 처리" },
+    { "name": "priority: P1", "color": "d93f0b", "description": "높음" },
+    { "name": "priority: P2", "color": "fbca04", "description": "보통" },
+    { "name": "area: frontend", "color": "5319e7", "description": "화면(React)" },
+    { "name": "area: backend", "color": "0e8a16", "description": "서버·DB" },
+    { "name": "area: design", "color": "f9d0c4", "description": "UI/UX·설계" },
+    { "name": "sp: 1", "color": "ededed", "description": "스토리 포인트 1" },
+    { "name": "sp: 2", "color": "ededed", "description": "스토리 포인트 2" },
+    { "name": "sp: 3", "color": "ededed", "description": "스토리 포인트 3" },
+    { "name": "sp: 5", "color": "ededed", "description": "스토리 포인트 5" },
+    { "name": "sp: 8", "color": "ededed", "description": "스토리 포인트 8" }
+  ],
+  "milestones": [
+    { "title": "Sprint 1: 기본 장부", "description": "1단계(필수): 로그인, 거래처, 거래 입력, 가계부 목록", "start_on": "2026-10-19", "due_on": "2026-11-01" },
+    { "title": "Sprint 2: 공유·모바일", "description": "2단계(차별점): 고객 공유 링크, 모바일 화면, 하이라이트", "start_on": "2026-11-02", "due_on": "2026-11-15" }
+  ],
+  "issues": [
+    { "title": "[Feature] 프로젝트 초기 설정 및 폴더 구조 정리", "milestone": 0, "labels": ["type: chore", "area: frontend", "priority: P0", "sp: 2"], "body": "## 사용자 스토리\n개발자가 팀 규칙에 맞는 폴더 구조에서 작업할 수 있다.\n\n## 완료 조건\n- [ ] 폴더 구조(pages, components, api) 정리\n- [ ] 린트·빌드 통과" },
+    { "title": "[Feature] 사장님 회원가입·로그인", "milestone": 0, "labels": ["type: feature", "area: backend", "priority: P0", "sp: 5"], "body": "## 사용자 스토리\n사장님이 이메일과 비밀번호로 가입·로그인해 자기 장부만 볼 수 있다.\n\n## 완료 조건\n- [ ] 비밀번호 해시 저장\n- [ ] 로그인 상태 유지\n- [ ] 다른 사용자 장부 접근 차단" },
+    { "title": "[Feature] 거래처 등록·수정·삭제", "milestone": 0, "labels": ["type: feature", "area: backend", "priority: P0", "sp: 3"], "body": "## 사용자 스토리\n사장님이 고객·매입처를 구분해 거래처를 관리할 수 있다.\n\n## 완료 조건\n- [ ] 이름, 구분, 연락처 입력\n- [ ] 목록 조회·검색" },
+    { "title": "[Feature] 데이터 모델 설계 (users/partners/transactions)", "milestone": 0, "labels": ["type: chore", "area: design", "priority: P0", "sp: 3"], "body": "## 사용자 스토리\n개발자가 세 테이블 구조로 미수금·순이익을 계산할 수 있다.\n\n## 완료 조건\n- [ ] ERD 작성\n- [ ] 미수금 = 매출 합계 - 입금 합계 계산식 검증" },
+    { "title": "[Feature] 다섯 종류 거래 입력(납품·입금·매입·지급·지출)", "milestone": 0, "labels": ["type: feature", "area: frontend", "priority: P0", "sp: 8"], "body": "## 사용자 스토리\n사장님이 거래 종류를 골라 거래처·금액을 입력할 수 있다.\n\n## 완료 조건\n- [ ] 거래처 자동완성\n- [ ] 날짜 기본값 오늘\n- [ ] 저장 후 목록에 반영" },
+    { "title": "[Feature] 거래 수정·삭제", "milestone": 0, "labels": ["type: feature", "area: frontend", "priority: P1", "sp: 3"], "body": "## 사용자 스토리\n사장님이 잘못 입력한 거래를 고치거나 지울 수 있다.\n\n## 완료 조건\n- [ ] 수정·삭제 후 잔액 재계산" },
+    { "title": "[Feature] 가계부 목록(종류·기간·거래처 필터)", "milestone": 0, "labels": ["type: feature", "area: frontend", "priority: P1", "sp: 5"], "body": "## 사용자 스토리\n사장님이 날짜순 거래를 조건별로 걸러 볼 수 있다.\n\n## 완료 조건\n- [ ] 종류·기간·거래처 필터" },
+    { "title": "[Feature] 거래처별 미수금 잔액 화면", "milestone": 0, "labels": ["type: feature", "area: frontend", "priority: P1", "sp: 5"], "body": "## 사용자 스토리\n사장님이 거래처별 받을 돈 흐름을 한눈에 볼 수 있다.\n\n## 완료 조건\n- [ ] 거래처별 내역과 잔액 표시" },
+    { "title": "[Feature] 고객 공유 링크(읽기 전용)", "milestone": 1, "labels": ["type: feature", "area: backend", "priority: P0", "sp: 5"], "body": "## 사용자 스토리\n고객이 로그인 없이 링크로 자기 장부만 볼 수 있다.\n\n## 완료 조건\n- [ ] 거래처별 고유 토큰 링크\n- [ ] 다른 거래처 데이터 노출 없음" },
+    { "title": "[Feature] 거래 확인 버튼과 이의 메모", "milestone": 1, "labels": ["type: feature", "area: frontend", "priority: P1", "sp: 5"], "body": "## 사용자 스토리\n고객이 거래마다 확인하거나 이의를 남길 수 있다.\n\n## 완료 조건\n- [ ] 확인 상태 저장\n- [ ] 사장님 화면에 이의 표시" },
+    { "title": "[Feature] 월별 정산서(전월 이월 + 납품 - 입금)", "milestone": 1, "labels": ["type: feature", "area: backend", "priority: P2", "sp: 3"], "body": "## 사용자 스토리\n고객이 월별 정산 내역을 볼 수 있다.\n\n## 완료 조건\n- [ ] 월 선택 시 이월·납품·입금·잔액 표시" },
+    { "title": "[Feature] 모바일 우선 반응형 화면", "milestone": 1, "labels": ["type: feature", "area: frontend", "priority: P0", "sp: 8"], "body": "## 사용자 스토리\n사장님이 납품 현장에서 폰으로 바로 입력할 수 있다.\n\n## 완료 조건\n- [ ] 큰 버튼·숫자 키패드\n- [ ] PC는 표, 모바일은 카드" },
+    { "title": "[Feature] 입력 줄 하이라이트와 미수 기간 색 구분", "milestone": 1, "labels": ["type: feature", "area: frontend", "priority: P1", "sp: 3"], "body": "## 사용자 스토리\n사장님이 오래된 미수금을 색으로 바로 알아본다.\n\n## 완료 조건\n- [ ] 방금 입력·수정한 줄 강조\n- [ ] 30일 이상 노랑, 60일 이상 빨강" },
+    { "title": "[Feature] 대시보드(월 매출·매입·지출·순이익)", "milestone": null, "labels": ["type: feature", "area: frontend", "priority: P2", "sp: 5"], "body": "## 사용자 스토리\n사장님이 이번 달 순이익과 받을 돈을 한 화면에서 본다.\n\n## 완료 조건\n- [ ] 순이익 = 매출 - 매입 - 지출" },
+    { "title": "[Feature] 엑셀 가져오기·내보내기", "milestone": null, "labels": ["type: feature", "area: backend", "priority: P2", "sp: 5"], "body": "## 사용자 스토리\n사장님이 기존 엑셀 장부를 옮겨 오고 내보낼 수 있다.\n\n## 완료 조건\n- [ ] xlsx 가져오기·내보내기" }
+  ]
+}

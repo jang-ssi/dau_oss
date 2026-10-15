@@ -27,3 +27,11 @@
 
 [전체 보고서](docs/dora/report.md) · 매주 월요일 GitHub Actions가 자동 갱신합니다.
 <!-- DORA:END -->
+
+## 스프린트 운영
+
+- 설정 가이드: [docs/PROJECT_SETUP.md](docs/PROJECT_SETUP.md)
+- 이슈 템플릿: Bug / Feature (`.github/ISSUE_TEMPLATE`)
+- 분석 리포트: [docs/sprint/report.md](docs/sprint/report.md) (Cycle Time, Velocity, Burndown)
+
+![burndown](docs/sprint/burndown.svg)

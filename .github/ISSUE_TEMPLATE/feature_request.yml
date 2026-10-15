@@ -1,0 +1,30 @@
+name: ✨ Feature 요청
+description: 새 기능이나 개선 사항을 제안합니다.
+title: "[Feature] "
+labels: ["type: feature"]
+body:
+  - type: textarea
+    id: story
+    attributes:
+      label: 사용자 스토리
+      placeholder: "사용자(누구)가 ~하기 위해 ~할 수 있다."
+    validations:
+      required: true
+  - type: textarea
+    id: ac
+    attributes:
+      label: 완료 조건 (Acceptance Criteria)
+      value: |
+        - [ ]
+        - [ ]
+    validations:
+      required: true
+  - type: dropdown
+    id: sp
+    attributes:
+      label: 스토리 포인트 (예상 규모)
+      options: ["1", "2", "3", "5", "8"]
+  - type: textarea
+    id: note
+    attributes:
+      label: 참고 사항

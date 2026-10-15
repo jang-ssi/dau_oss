@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="'Segoe UI','Malgun Gothic',Arial,sans-serif">
+<rect width="760" height="380" fill="#fff"/>
+<text x="24" y="34" font-size="20" font-weight="700" fill="#111827">Burndown · Sprint 1 (샘플)</text>
+<text x="24" y="54" font-size="12" fill="#6b7280">2026-10-05 ~ 2026-10-18 · 총 34pt · 샘플 데이터(시안)</text>
+<line x1="56" y1="310" x2="726" y2="310" stroke="#f3f4f6"/><text x="48" y="314" font-size="11" fill="#9ca3af" text-anchor="end">0</text>
+<line x1="56" y1="250" x2="726" y2="250" stroke="#f3f4f6"/><text x="48" y="254" font-size="11" fill="#9ca3af" text-anchor="end">8.5</text>
+<line x1="56" y1="190" x2="726" y2="190" stroke="#f3f4f6"/><text x="48" y="194" font-size="11" fill="#9ca3af" text-anchor="end">17</text>
+<line x1="56" y1="130" x2="726" y2="130" stroke="#f3f4f6"/><text x="48" y="134" font-size="11" fill="#9ca3af" text-anchor="end">25.5</text>
+<line x1="56" y1="70" x2="726" y2="70" stroke="#f3f4f6"/><text x="48" y="74" font-size="11" fill="#9ca3af" text-anchor="end">34</text>
+<text x="56" y="328" font-size="11" fill="#9ca3af" text-anchor="middle">10-05</text>
+<text x="159.0769230769231" y="328" font-size="11" fill="#9ca3af" text-anchor="middle">10-07</text>
+<text x="262.1538461538462" y="328" font-size="11" fill="#9ca3af" text-anchor="middle">10-09</text>
+<text x="365.2307692307692" y="328" font-size="11" fill="#9ca3af" text-anchor="middle">10-11</text>
+<text x="468.3076923076923" y="328" font-size="11" fill="#9ca3af" text-anchor="middle">10-13</text>
+<text x="571.3846153846154" y="328" font-size="11" fill="#9ca3af" text-anchor="middle">10-15</text>
+<text x="674.4615384615385" y="328" font-size="11" fill="#9ca3af" text-anchor="middle">10-17</text>
+<polyline points="56,70 107.53846153846155,88.35294117647061 159.0769230769231,106.70588235294119 210.6153846153846,125.05882352941177 262.1538461538462,144.11764705882354 313.6923076923077,162.47058823529414 365.2307692307692,180.82352941176472 416.7692307692308,199.1764705882353 468.3076923076923,217.52941176470588 519.8461538461538,235.88235294117646 571.3846153846154,254.94117647058823 622.9230769230769,273.29411764705884 674.4615384615385,291.6470588235294 726,310" fill="none" stroke="#9ca3af" stroke-width="2" stroke-dasharray="6 4"/>
+<polyline points="56,70 107.53846153846155,84.11764705882354 159.0769230769231,84.11764705882354 210.6153846153846,119.41176470588238 262.1538461538462,140.58823529411762 313.6923076923077,140.58823529411762 365.2307692307692,175.88235294117646 416.7692307692308,175.88235294117646 468.3076923076923,175.88235294117646 519.8461538461538,232.35294117647058 571.3846153846154,232.35294117647058" fill="none" stroke="#2563eb" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="56" cy="70" r="3.5" fill="#2563eb"/>
+<circle cx="107.53846153846155" cy="84.11764705882354" r="3.5" fill="#2563eb"/>
+<circle cx="159.0769230769231" cy="84.11764705882354" r="3.5" fill="#2563eb"/>
+<circle cx="210.6153846153846" cy="119.41176470588238" r="3.5" fill="#2563eb"/>
+<circle cx="262.1538461538462" cy="140.58823529411762" r="3.5" fill="#2563eb"/>
+<circle cx="313.6923076923077" cy="140.58823529411762" r="3.5" fill="#2563eb"/>
+<circle cx="365.2307692307692" cy="175.88235294117646" r="3.5" fill="#2563eb"/>
+<circle cx="416.7692307692308" cy="175.88235294117646" r="3.5" fill="#2563eb"/>
+<circle cx="468.3076923076923" cy="175.88235294117646" r="3.5" fill="#2563eb"/>
+<circle cx="519.8461538461538" cy="232.35294117647058" r="3.5" fill="#2563eb"/>
+<circle cx="571.3846153846154" cy="232.35294117647058" r="3.5" fill="#2563eb"/>
+<line x1="56" y1="344" x2="80" y2="344" stroke="#9ca3af" stroke-width="2" stroke-dasharray="6 4"/><text x="86" y="348" font-size="12" fill="#6b7280">이상적 소진</text>
+<line x1="176" y1="344" x2="200" y2="344" stroke="#2563eb" stroke-width="3"/><text x="206" y="348" font-size="12" fill="#6b7280">실제 남은 포인트</text>
+</svg>

@@ -1,0 +1,39 @@
+name: 🐞 Bug 리포트
+description: 동작이 기대와 다를 때 등록합니다.
+title: "[Bug] "
+labels: ["type: bug", "priority: P1"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: 현상 요약
+      placeholder: 어떤 문제가 발생했나요?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 방법
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대 결과 / 실제 결과
+    validations:
+      required: true
+  - type: dropdown
+    id: env
+    attributes:
+      label: 발생 환경
+      options: [PC 웹, 모바일 웹, 둘 다]
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: 스크린샷 / 로그
