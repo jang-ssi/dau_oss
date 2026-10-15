@@ -26,7 +26,7 @@
    - *Auto-add to project*: 저장소 `jang-ssi/dau_oss`, 필터 `is:issue` 추가
 5. 보드 아래 **+ Add item**에서 `#`을 입력해 이슈를 한꺼번에 추가합니다. (자동 추가를 켜 두었다면 기존 이슈는 `Add item`으로 한 번만 추가)
 6. 이슈를 이렇게 배치합니다: Sprint 1 이슈 → `To Do`, 마일스톤 없는 이슈 → `Backlog`.
-7. 보기 설정: 필드로 **Milestone**, **Labels**, **Assignees**를 표시하고 Group by 로 Milestone을 지정하면 스프린트별로 볼 수 있습니다.
+7. 보기 설정: Board 보기는 Status 컬럼 기준이라 Group by가 없습니다. `+ New view`로 **Table** 보기를 하나 더 만들고, 보기 이름 옆 `⌄` 메뉴의 **Group by → Milestone**을 지정한 뒤 **Milestone**, **Labels**, **Assignees** 필드를 표시하면 스프린트별로 볼 수 있습니다.
 8. 저장소 **Settings → General → Features**에서 Issues가 켜져 있어야 합니다.
 
 ## 3. 스프린트 운영 규칙
