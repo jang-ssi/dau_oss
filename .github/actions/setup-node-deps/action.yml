@@ -1,0 +1,52 @@
+name: Setup Node.js and dependencies
+description: Node.js를 설치하고 node_modules를 캐시에서 복원하거나 npm ci로 설치한다.
+
+inputs:
+  node-version:
+    description: 설치할 Node.js 버전
+    default: '22'
+  cache:
+    description: node_modules 캐시 사용 여부 (true/false)
+    default: 'true'
+
+outputs:
+  cache-hit:
+    description: 캐시가 정확히 일치해 npm ci를 건너뛰었는지 여부
+    value: ${{ steps.cache.outputs.cache-hit == 'true' }}
+  install-ms:
+    description: 의존성 준비(캐시 복원 + npm ci)에 걸린 시간(ms)
+    value: ${{ steps.finish.outputs.install-ms }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v5
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: 측정 시작
+      id: start
+      shell: bash
+      run: echo "at=$(node -p 'Date.now()')" >> "$GITHUB_OUTPUT"
+
+    # package-lock.json이 같으면 node_modules를 그대로 복원한다.
+    # 네이티브 바이너리가 OS·Node 버전에 묶이므로 둘 다 키에 넣는다.
+    - name: node_modules 캐시
+      id: cache
+      if: inputs.cache == 'true'
+      uses: actions/cache@v4
+      with:
+        path: node_modules
+        key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ inputs.node-version }}-${{ hashFiles('package-lock.json') }}
+
+    - name: 의존성 설치
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: npm ci
+
+    - name: 측정 종료
+      id: finish
+      shell: bash
+      env:
+        STARTED_AT: ${{ steps.start.outputs.at }}
+      run: echo "install-ms=$(node -p 'Date.now() - Number(process.env.STARTED_AT)')" >> "$GITHUB_OUTPUT"

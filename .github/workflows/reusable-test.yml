@@ -1,0 +1,51 @@
+name: Reusable Test
+
+# 다른 워크플로우가 호출해 쓰는 테스트 Job.
+# OS와 Node 버전을 입력으로 받아 설치 -> (선택) Lint -> Test를 실행한다.
+on:
+  workflow_call:
+    inputs:
+      os:
+        description: 러너 OS
+        type: string
+        default: ubuntu-latest
+      node-version:
+        description: Node.js 버전
+        type: string
+        default: '22'
+      run-lint:
+        description: 테스트 전에 Lint도 실행할지 여부
+        type: boolean
+        default: false
+      experimental:
+        description: 실패해도 전체 결과를 실패로 만들지 않는 실험 조합인지 여부
+        type: boolean
+        default: false
+      cache:
+        description: node_modules 캐시 사용 여부
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ inputs.node-version }} / ${{ inputs.os }}
+    runs-on: ${{ inputs.os }}
+    timeout-minutes: 10
+    continue-on-error: ${{ inputs.experimental }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: ./.github/actions/setup-node-deps
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: ${{ inputs.cache }}
+
+      - name: Lint
+        if: inputs.run-lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test

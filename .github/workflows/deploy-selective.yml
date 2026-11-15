@@ -1,0 +1,139 @@
+name: Selective Deploy
+
+# 바뀐 파일과 이벤트 종류에 따라 필요한 배포만 실행한다.
+#   앱 변경 + PR          -> 미리보기 배포
+#   앱 변경 + main 푸시   -> 프로덕션 배포
+#   문서만 변경           -> 빌드와 배포를 모두 건너뜀
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  changes:
+    name: 변경 파일 감지
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      app: ${{ steps.filter.outputs.app }}
+      docs: ${{ steps.filter.outputs.docs }}
+    steps:
+      - uses: actions/checkout@v5
+      - id: filter
+        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        with:
+          filters: |
+            app:
+              - 'src/**'
+              - 'public/**'
+              - 'index.html'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'vite.config.ts'
+              - 'tsconfig*.json'
+              - '.github/actions/setup-node-deps/**'
+            docs:
+              - 'docs/**'
+              - '**/*.md'
+
+  build:
+    name: Build
+    needs: changes
+    # 수동 실행은 변경 여부와 관계없이 빌드한다.
+    if: needs.changes.outputs.app == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup-node-deps
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist/
+          retention-days: 7
+
+  deploy-preview:
+    name: Deploy (preview)
+    needs: build
+    # 포크에서 온 PR은 Secrets를 받지 못하므로 제외한다.
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          name: site
+          path: dist/
+      - name: 미리보기 배포
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          test -f dist/index.html
+          echo "미리보기 환경 pr-$PR_NUMBER 에 $(find dist -type f | wc -l)개 파일을 배포했습니다."
+
+  deploy-production:
+    name: Deploy (production)
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          name: site
+          path: dist/
+      - name: 프로덕션 배포
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          if [ -z "$DEPLOY_TOKEN" ]; then
+            echo "::error::DEPLOY_TOKEN Secret이 설정되지 않았습니다."
+            exit 1
+          fi
+          test -f dist/index.html
+          echo "프로덕션에 $(find dist -type f | wc -l)개 파일을 배포했습니다."
+
+  summary:
+    name: 배포 결정 요약
+    needs: [changes, build, deploy-preview, deploy-production]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 요약 작성
+        env:
+          EVENT: ${{ github.event_name }}
+          REF: ${{ github.ref_name }}
+          APP: ${{ needs.changes.outputs.app }}
+          DOCS: ${{ needs.changes.outputs.docs }}
+          BUILD: ${{ needs.build.result }}
+          PREVIEW: ${{ needs.deploy-preview.result }}
+          PRODUCTION: ${{ needs.deploy-production.result }}
+        run: |
+          {
+            echo "## 선택적 배포 결과"
+            echo ""
+            echo "| 항목 | 값 |"
+            echo "|------|----|"
+            echo "| 이벤트 / 브랜치 | $EVENT / $REF |"
+            echo "| 앱 변경 | $APP |"
+            echo "| 문서 변경 | $DOCS |"
+            echo "| Build | $BUILD |"
+            echo "| Deploy (preview) | $PREVIEW |"
+            echo "| Deploy (production) | $PRODUCTION |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$BUILD" = "failure" ] || [ "$PREVIEW" = "failure" ] || [ "$PRODUCTION" = "failure" ]; then
+            exit 1
+          fi
