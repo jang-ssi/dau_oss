@@ -16,26 +16,31 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-      - run: npm ci
+      - uses: ./.github/actions/setup-node-deps
       - run: npm run lint
 
   test:
-    name: Test (Node ${{ matrix.node }} / ${{ matrix.os }})
-    runs-on: ${{ matrix.os }}
+    name: Test
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node: [22, 24]
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version: ${{ matrix.node }}
-      - run: npm ci
-      - run: npm test
+        node: ['22', '24']
+        experimental: [false]
+        # 비용이 큰 macOS 러너는 최신 LTS만 검증한다.
+        exclude:
+          - os: macos-latest
+            node: '22'
+        # 다음 메이저 버전은 Linux에서만, 실패를 허용하는 실험 조합으로 미리 확인한다.
+        include:
+          - os: ubuntu-latest
+            node: '26'
+            experimental: true
+    uses: ./.github/workflows/reusable-test.yml
+    with:
+      os: ${{ matrix.os }}
+      node-version: ${{ matrix.node }}
+      experimental: ${{ matrix.experimental }}
