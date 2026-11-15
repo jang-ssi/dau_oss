@@ -22,8 +22,6 @@ jobs:
           node-version: 22
       - run: npm ci
       - name: 프로덕션 빌드
-        env:
-          VITE_APP_VERSION: ${{ github.sha }}
         run: npm run build
       - name: dist 아티팩트 업로드
         uses: actions/upload-artifact@v4
@@ -58,6 +56,8 @@ jobs:
   deploy:
     name: Deploy
     needs: test
+    # 리뷰를 마치고 main에 들어온 코드만 배포한다. PR에서는 build, test까지만 실행한다.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: dist 아티팩트 다운로드
@@ -69,7 +69,12 @@ jobs:
         env:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
-          echo "배포를 시작합니다."
+          # Secret 값은 출력하지 않고 존재 여부만 확인한다.
+          if [ -z "$DEPLOY_TOKEN" ]; then
+            echo "::error::DEPLOY_TOKEN Secret이 설정되지 않았습니다."
+            exit 1
+          fi
+          echo "배포를 시작합니다. (토큰 길이: ${#DEPLOY_TOKEN})"
           tar -czf release.tar.gz -C dist .
           echo "배포 패키지 크기: $(du -h release.tar.gz | cut -f1)"
       - name: 배포 패키지 업로드
