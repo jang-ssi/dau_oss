@@ -1,8 +1,8 @@
 # 변경된 경로에 해당하는 소유자가 리뷰어로 자동 지정됩니다.
 # 아래에 있는 규칙일수록 우선합니다.
 
-*                   @jang-ssi
+*   @jang-ssi
 
-/.github/           @jang-ssi
-/docs/              @jang-ssi
-/src/               @jang-ssi
+# 경로별 소유자가 달라지면 아래 형식으로 추가합니다.
+# /.github/workflows/   @ci-owner
+# /docs/                @docs-owner

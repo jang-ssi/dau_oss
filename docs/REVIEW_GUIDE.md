@@ -44,6 +44,7 @@
 1. 작성자는 PR 템플릿을 채우고, 스스로 먼저 diff를 읽어 봅니다.
 2. 리뷰어는 **1 영업일 이내**에 첫 응답을 남깁니다.
 3. `[MUST]`가 하나라도 있으면 `Request changes`, 없으면 `Approve` 또는 `Comment`로 제출합니다.
+   - GitHub은 자신의 PR에 `Approve`/`Request changes`를 제출할 수 없습니다. 작성자 본인의 셀프 리뷰는 `Comment`로 제출하고, `[MUST]`가 모두 해결된 뒤 머지합니다.
 4. 작성자는 모든 `[MUST]`와 `[SHOULD]`에 수정 커밋 또는 답글로 대응합니다.
 5. 모든 대화가 해결(Resolve)되면 Squash merge 합니다.
 
