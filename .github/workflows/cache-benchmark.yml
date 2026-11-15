@@ -8,7 +8,6 @@ on:
     paths:
       - .github/actions/setup-node-deps/**
       - .github/workflows/cache-benchmark.yml
-      - package-lock.json
 
 permissions:
   contents: read
@@ -77,8 +76,11 @@ jobs:
               const before = results.find((r) => r.os === os && r.mode === 'no-cache');
               const after = results.find((r) => r.os === os && r.mode === 'cache');
               if (!before || !after) continue;
-              const gain = ((before.installMs - after.installMs) / before.installMs) * 100;
-              rows.push([os, `${sec(before.installMs)}s`, `${sec(after.installMs)}s`, after.cacheHit ? 'hit' : 'miss', `${gain.toFixed(1)}%`]);
+              // 캐시를 만드는 실행(miss)의 수치는 캐시 효과가 아니므로 개선률을 계산하지 않는다.
+              const gain = after.cacheHit
+                ? `${(((before.installMs - after.installMs) / before.installMs) * 100).toFixed(1)}%`
+                : '-';
+              rows.push([os, `${sec(before.installMs)}s`, `${sec(after.installMs)}s`, after.cacheHit ? 'hit' : 'miss', gain]);
             }
             await core.summary
               .addHeading('의존성 준비 시간: 캐시 전후', 2)
