@@ -3,6 +3,7 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
+import { formatCount, increment } from './lib/counter'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -24,9 +25,9 @@ function App() {
         <button
           type="button"
           className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          onClick={() => setCount(increment)}
         >
-          Count is {count}
+          {formatCount(count)}
         </button>
       </section>
 
