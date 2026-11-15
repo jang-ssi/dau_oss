@@ -1,0 +1,70 @@
+name: SLA Tracker
+
+# 응답 기한(SLA)을 넘긴 이슈와 PR을 찾아 라벨을 붙이고 요약을 남긴다.
+on:
+  schedule:
+    - cron: '0 1 * * 1-5' # 평일 10:00 (한국 시간)
+  workflow_dispatch:
+    inputs:
+      sla_hours:
+        description: '첫 응답 기한(시간)'
+        default: '48'
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SLA 초과 항목 확인
+        uses: actions/github-script@v8
+        env:
+          SLA_HOURS: ${{ inputs.sla_hours || '48' }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const slaHours = Number(process.env.SLA_HOURS);
+            const LABEL = 'sla: breached';
+            const now = Date.now();
+
+            const items = await github.paginate(github.rest.issues.listForRepo, {
+              owner, repo, state: 'open', per_page: 100,
+            });
+
+            const breached = [];
+            for (const item of items) {
+              const ageHours = (now - new Date(item.created_at)) / 36e5;
+              if (ageHours < slaHours) continue;
+
+              const comments = await github.paginate(github.rest.issues.listComments, {
+                owner, repo, issue_number: item.number, per_page: 100,
+              });
+              const responded = comments.some(
+                (c) => c.user.type !== 'Bot' && c.user.login !== item.user.login,
+              );
+              const hasLabel = item.labels.some((l) => l.name === LABEL);
+
+              if (!responded) {
+                breached.push({ item, ageHours });
+                if (!hasLabel) {
+                  await github.rest.issues.addLabels({ owner, repo, issue_number: item.number, labels: [LABEL] });
+                }
+              } else if (hasLabel) {
+                await github.rest.issues.removeLabel({ owner, repo, issue_number: item.number, name: LABEL });
+              }
+            }
+
+            const rows = breached.map(({ item, ageHours }) => [
+              `#${item.number}`,
+              item.pull_request ? 'PR' : 'Issue',
+              item.title,
+              `${Math.floor(ageHours)}시간`,
+            ]);
+
+            await core.summary
+              .addHeading('SLA 추적 결과')
+              .addRaw(`첫 응답 기한: ${slaHours}시간 · 열린 항목: ${items.length}건 · 초과: ${breached.length}건`)
+              .addTable([['번호', '종류', '제목', '경과'], ...rows])
+              .write();
