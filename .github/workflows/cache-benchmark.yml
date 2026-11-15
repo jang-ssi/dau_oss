@@ -1,0 +1,87 @@
+name: Cache Benchmark
+
+# 같은 커밋, 같은 러너 종류에서 캐시를 끈 Job과 켠 Job을 나란히 실행해 의존성 준비 시간을 비교한다.
+# 첫 실행은 캐시를 만드는 실행(cold)이고, 두 번째 실행부터 캐시 적중(warm) 수치가 나온다.
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/actions/setup-node-deps/**
+      - .github/workflows/cache-benchmark.yml
+      - package-lock.json
+
+permissions:
+  contents: read
+
+jobs:
+  measure:
+    name: ${{ matrix.mode }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        mode: [no-cache, cache]
+    steps:
+      - uses: actions/checkout@v5
+
+      - id: setup
+        uses: ./.github/actions/setup-node-deps
+        with:
+          cache: ${{ matrix.mode == 'cache' }}
+
+      - name: 설치 결과 검증
+        run: npm test
+
+      - name: 결과 기록
+        shell: bash
+        env:
+          MODE: ${{ matrix.mode }}
+          OS: ${{ matrix.os }}
+          CACHE_HIT: ${{ steps.setup.outputs.cache-hit }}
+          INSTALL_MS: ${{ steps.setup.outputs.install-ms }}
+        run: |
+          echo "{\"os\":\"$OS\",\"mode\":\"$MODE\",\"cacheHit\":$CACHE_HIT,\"installMs\":$INSTALL_MS}" > result.json
+          cat result.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bench-${{ matrix.os }}-${{ matrix.mode }}
+          path: result.json
+          retention-days: 7
+
+  report:
+    name: Report
+    needs: measure
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          pattern: bench-*
+          path: results
+
+      - name: 비교 표 작성
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const results = fs.readdirSync('results').map((d) =>
+              JSON.parse(fs.readFileSync(path.join('results', d, 'result.json'), 'utf8')),
+            );
+            const sec = (ms) => (ms / 1000).toFixed(1);
+            const rows = [];
+            for (const os of [...new Set(results.map((r) => r.os))].sort()) {
+              const before = results.find((r) => r.os === os && r.mode === 'no-cache');
+              const after = results.find((r) => r.os === os && r.mode === 'cache');
+              if (!before || !after) continue;
+              const gain = ((before.installMs - after.installMs) / before.installMs) * 100;
+              rows.push([os, `${sec(before.installMs)}s`, `${sec(after.installMs)}s`, after.cacheHit ? 'hit' : 'miss', `${gain.toFixed(1)}%`]);
+            }
+            await core.summary
+              .addHeading('의존성 준비 시간: 캐시 전후', 2)
+              .addTable([['OS', '캐시 없음', '캐시 사용', '캐시', '개선률'], ...rows])
+              .addRaw('캐시가 miss인 행은 캐시를 만드는 첫 실행입니다. 다시 실행하면 적중 수치가 나옵니다.')
+              .write();
