@@ -1,0 +1,79 @@
+name: Build-Test-Deploy
+
+# Build -> Test -> Deploy 순서로 의존하는 복합 파이프라인.
+# build가 만든 dist 아티팩트를 test와 deploy가 내려받아 같은 산출물을 검증하고 배포한다.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: 프로덕션 빌드
+        env:
+          VITE_APP_VERSION: ${{ github.sha }}
+        run: npm run build
+      - name: dist 아티팩트 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: 단위 테스트
+        run: npm test
+      - name: dist 아티팩트 다운로드
+        uses: actions/download-artifact@v5
+        with:
+          name: dist
+          path: dist/
+      - name: 빌드 산출물 검증
+        run: |
+          test -f dist/index.html
+          ls dist/assets/*.js
+          echo "index.html과 번들 파일을 확인했습니다."
+
+  deploy:
+    name: Deploy
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: dist 아티팩트 다운로드
+        uses: actions/download-artifact@v5
+        with:
+          name: dist
+          path: dist/
+      - name: 배포
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          echo "배포를 시작합니다."
+          tar -czf release.tar.gz -C dist .
+          echo "배포 패키지 크기: $(du -h release.tar.gz | cut -f1)"
+      - name: 배포 패키지 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ github.sha }}
+          path: release.tar.gz
