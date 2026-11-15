@@ -17,10 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-      - run: npm ci
+      - uses: ./.github/actions/setup-node-deps
       - name: 프로덕션 빌드
         run: npm run build
       - name: dist 아티팩트 업로드
@@ -36,10 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-      - run: npm ci
+      - uses: ./.github/actions/setup-node-deps
       - name: 단위 테스트
         run: npm test
       - name: dist 아티팩트 다운로드
