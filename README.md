@@ -1,5 +1,6 @@
 # dau_oss
 
+[![CI](https://github.com/jang-ssi/dau_oss/actions/workflows/ci.yml/badge.svg)](https://github.com/jang-ssi/dau_oss/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
@@ -15,13 +16,14 @@ npm ci
 npm run dev
 ```
 
-Node.js 20.19 이상이 필요합니다.
+Node.js 22.12 이상이 필요합니다.
 
 | 명령 | 설명 |
 |------|------|
 | `npm run dev` | 개발 서버 실행 |
 | `npm run build` | 타입 검사 후 프로덕션 빌드 |
 | `npm run lint` | oxlint 정적 분석 |
+| `npm test` | Vitest 단위 테스트 |
 | `npm run preview` | 빌드 결과 미리보기 |
 
 ## 문서

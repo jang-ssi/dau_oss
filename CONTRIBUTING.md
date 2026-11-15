@@ -12,7 +12,7 @@ npm ci
 npm run dev
 ```
 
-- Node.js 20.19 이상(권장 22 LTS)이 필요합니다.
+- Node.js 22.12 이상(권장 24 LTS)이 필요합니다.
 - 자세한 환경 구성은 Wiki의 [Getting Started](https://github.com/jang-ssi/dau_oss/wiki/Getting-Started)를 참고하세요.
 
 ## 2. 브랜치 전략 (Feature Branch)
@@ -61,6 +61,7 @@ Closes #12
 2. 브랜치를 만들고 작업한 뒤 로컬에서 아래 검증을 통과시킵니다.
    ```bash
    npm run lint
+   npm test
    npm run build
    ```
 3. PR 제목도 Conventional Commits 형식으로 작성합니다.
