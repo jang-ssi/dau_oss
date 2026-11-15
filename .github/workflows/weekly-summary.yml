@@ -17,6 +17,7 @@ permissions:
 jobs:
   summarize:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: 주간 활동 집계
         uses: actions/github-script@v8

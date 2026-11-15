@@ -14,6 +14,7 @@ permissions:
 jobs:
   respond:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: 안내 댓글과 라벨
         uses: actions/github-script@v8
@@ -22,6 +23,8 @@ jobs:
             const { owner, repo } = context.repo;
             const isPR = !!context.payload.pull_request;
             const item = context.payload.pull_request ?? context.payload.issue;
+            // 봇(Dependabot, 시드 워크플로우 등)이 만든 항목에는 응답하지 않는다.
+            if (item.user.type === 'Bot') return;
             const author = item.user.login;
             const base = `https://github.com/${owner}/${repo}`;
 

@@ -1,6 +1,7 @@
 name: SLA Tracker
 
-# 응답 기한(SLA)을 넘긴 이슈와 PR을 찾아 라벨을 붙이고 요약을 남긴다.
+# 분류 대기(needs-triage) 상태로 응답 기한(SLA)을 넘긴 이슈를 찾아 라벨을 붙이고 요약을 남긴다.
+# 관리자가 분류를 마치고 needs-triage 라벨을 떼면 SLA를 충족한 것으로 본다.
 on:
   schedule:
     - cron: '0 1 * * 1-5' # 평일 10:00 (한국 시간)
@@ -17,6 +18,7 @@ permissions:
 jobs:
   track:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: SLA 초과 항목 확인
         uses: actions/github-script@v8
@@ -26,11 +28,12 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const slaHours = Number(process.env.SLA_HOURS);
+            const TRIAGE = 'needs-triage';
             const LABEL = 'sla: breached';
             const now = Date.now();
 
             const items = await github.paginate(github.rest.issues.listForRepo, {
-              owner, repo, state: 'open', per_page: 100,
+              owner, repo, state: 'open', labels: TRIAGE, per_page: 100,
             });
 
             const breached = [];
@@ -38,7 +41,8 @@ jobs:
               const ageHours = (now - new Date(item.created_at)) / 36e5;
               if (ageHours < slaHours) continue;
 
-              const comments = await github.paginate(github.rest.issues.listComments, {
+              // 댓글이 없으면 조회하지 않는다.
+              const comments = item.comments === 0 ? [] : await github.paginate(github.rest.issues.listComments, {
                 owner, repo, issue_number: item.number, per_page: 100,
               });
               const responded = comments.some(
@@ -65,6 +69,6 @@ jobs:
 
             await core.summary
               .addHeading('SLA 추적 결과')
-              .addRaw(`첫 응답 기한: ${slaHours}시간 · 열린 항목: ${items.length}건 · 초과: ${breached.length}건`)
+              .addRaw(`첫 응답 기한: ${slaHours}시간 · 분류 대기: ${items.length}건 · 초과: ${breached.length}건`)
               .addTable([['번호', '종류', '제목', '경과'], ...rows])
               .write();
