@@ -1,0 +1,72 @@
+name: Weekly Summary
+
+# 지난 7일의 이슈·PR 활동을 요약한다.
+on:
+  schedule:
+    - cron: '0 0 * * 1' # 매주 월요일 09:00 (한국 시간)
+  workflow_dispatch:
+    inputs:
+      create_issue:
+        description: '요약을 이슈로도 등록 (true/false)'
+        default: 'false'
+
+permissions:
+  issues: write
+  pull-requests: read
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 주간 활동 집계
+        uses: actions/github-script@v8
+        env:
+          CREATE_ISSUE: ${{ inputs.create_issue || 'false' }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const since = new Date(Date.now() - 7 * 24 * 36e5);
+            const day = (d) => d.toISOString().slice(0, 10);
+
+            const all = await github.paginate(github.rest.issues.listForRepo, {
+              owner, repo, state: 'all', since: since.toISOString(), per_page: 100,
+            });
+            const inWindow = (t) => t && new Date(t) >= since;
+
+            const issues = all.filter((i) => !i.pull_request);
+            const prs = all.filter((i) => i.pull_request);
+            const opened = issues.filter((i) => inWindow(i.created_at));
+            const closed = issues.filter((i) => inWindow(i.closed_at));
+            const merged = prs.filter((p) => inWindow(p.pull_request.merged_at));
+            const list = (xs) => xs.map((x) => `- #${x.number} ${x.title}`).join('\n') || '- 없음';
+
+            const body = [
+              `## 📅 주간 요약 (${day(since)} ~ ${day(new Date())})`,
+              '',
+              '| 항목 | 건수 |',
+              '|------|------|',
+              `| 새 이슈 | ${opened.length} |`,
+              `| 닫힌 이슈 | ${closed.length} |`,
+              `| 머지된 PR | ${merged.length} |`,
+              '',
+              '### 머지된 PR',
+              list(merged),
+              '',
+              '### 새 이슈',
+              list(opened),
+              '',
+              '### 닫힌 이슈',
+              list(closed),
+            ].join('\n');
+
+            await core.summary.addRaw(body).write();
+
+            if (process.env.CREATE_ISSUE === 'true') {
+              await github.rest.issues.create({
+                owner, repo,
+                title: `주간 요약 ${day(new Date())}`,
+                body,
+                labels: ['weekly-summary'],
+              });
+            }
