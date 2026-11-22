@@ -13,7 +13,7 @@ npm run dev
 ```
 
 - Node.js 22.12 이상(권장 24 LTS)이 필요합니다.
-- 자세한 환경 구성은 Wiki의 [Getting Started](https://github.com/jang-ssi/dau_oss/wiki/Getting-Started)를 참고하세요.
+- 명령어 목록과 폴더 구성은 [README](README.md)를 참고하세요.
 
 ## 2. 브랜치 전략 (Feature Branch)
 
