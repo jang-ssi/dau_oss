@@ -35,7 +35,6 @@ Node.js 22.12 이상이 필요합니다.
 | [라이선스 비교 분석](docs/oss/license-comparison.md) | 주요 OSS 라이선스 비교와 선택 기준 |
 | [Inner Source 로드맵](docs/oss/inner-source-roadmap.md) | 조직 내부 적용을 위한 단계별 계획 |
 | [CI 최적화 리포트](docs/ci/optimization-report.md) | 캐시 전후 실행 시간 비교, 선택적 배포 |
-| [Wiki](https://github.com/jang-ssi/dau_oss/wiki) | Getting Started, Development Guide, Troubleshooting |
 
 ## 기여하기
 
