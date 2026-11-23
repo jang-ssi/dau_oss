@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" font-family="'Segoe UI','Malgun Gothic',Arial,sans-serif">
 <rect width="960" height="640" fill="#ffffff"/>
 <text x="24" y="38" font-size="22" font-weight="700" fill="#111827">DORA Metrics Dashboard</text>
-<text x="24" y="60" font-size="13" fill="#6b7280">jang-ssi/dau_oss · 최근 8주 · 2026-11-16 기준</text>
+<text x="24" y="60" font-size="13" fill="#6b7280">jang-ssi/dau_oss · 최근 8주 · 2026-11-23 기준</text>
 <rect x="24" y="80" width="216" height="104" rx="10" fill="#f9fafb" stroke="#e5e7eb"/>
 <text x="38" y="104" font-size="13" font-weight="600" fill="#374151">Lead Time</text>
 <text x="38" y="124" font-size="11" fill="#9ca3af">변경 리드타임 (중앙값)</text>
-<text x="38" y="160" font-size="26" font-weight="700" fill="#111827">6분</text>
+<text x="38" y="160" font-size="26" font-weight="700" fill="#111827">0분</text>
 <rect x="152" y="146" width="74" height="22" rx="11" fill="#16a34a"/>
 <text x="189" y="161" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Elite</text>
 <rect x="256" y="80" width="216" height="104" rx="10" fill="#f9fafb" stroke="#e5e7eb"/>
 <text x="270" y="104" font-size="13" font-weight="600" fill="#374151">Deployment Frequency</text>
 <text x="270" y="124" font-size="11" fill="#9ca3af">배포 빈도</text>
-<text x="270" y="160" font-size="26" font-weight="700" fill="#111827">5회/주</text>
+<text x="270" y="160" font-size="26" font-weight="700" fill="#111827">1회/주</text>
 <rect x="384" y="146" width="74" height="22" rx="11" fill="#2563eb"/>
 <text x="421" y="161" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">High</text>
 <rect x="488" y="80" width="216" height="104" rx="10" fill="#f9fafb" stroke="#e5e7eb"/>
@@ -38,16 +38,17 @@
 <text x="58" y="282.5" font-size="10" fill="#9ca3af" text-anchor="end">0.9</text>
 <line x1="64" y1="248" x2="452" y2="248" stroke="#f3f4f6"/>
 <text x="58" y="252" font-size="10" fill="#9ca3af" text-anchor="end">1.2</text>
-<polyline points="452,359.39130434782606" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/>
-<circle cx="452" cy="359.39130434782606" r="3.5" fill="#2563eb"/>
-<text x="64" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">09-21</text>
-<text x="119.42857142857143" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">09-28</text>
-<text x="174.85714285714286" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-05</text>
-<text x="230.28571428571428" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-12</text>
-<text x="285.7142857142857" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-19</text>
-<text x="341.14285714285717" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-26</text>
-<text x="396.57142857142856" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">11-02</text>
-<text x="452" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">11-09</text>
+<polyline points="396.57142857142856,359.39130434782606 452,370" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="396.57142857142856" cy="359.39130434782606" r="3.5" fill="#2563eb"/>
+<circle cx="452" cy="370" r="3.5" fill="#2563eb"/>
+<text x="64" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">09-28</text>
+<text x="119.42857142857143" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-05</text>
+<text x="174.85714285714286" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-12</text>
+<text x="230.28571428571428" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-19</text>
+<text x="285.7142857142857" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-26</text>
+<text x="341.14285714285717" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">11-02</text>
+<text x="396.57142857142856" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">11-09</text>
+<text x="452" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">11-16</text>
 <rect x="492" y="208" width="444" height="196" rx="10" fill="#fff" stroke="#e5e7eb"/>
 <text x="506" y="232" font-size="13" font-weight="600" fill="#374151">배포 횟수 (주)</text>
 <line x1="532" y1="370" x2="920" y2="370" stroke="#f3f4f6"/>
@@ -66,16 +67,16 @@
 <rect x="684.2857142857142" y="370" width="28" height="0" rx="3" fill="#16a34a" opacity="0.85"/>
 <rect x="739.7142857142858" y="370" width="28" height="0" rx="3" fill="#16a34a" opacity="0.85"/>
 <rect x="795.1428571428571" y="370" width="28" height="0" rx="3" fill="#16a34a" opacity="0.85"/>
-<rect x="850.5714285714286" y="370" width="28" height="0" rx="3" fill="#16a34a" opacity="0.85"/>
-<rect x="906" y="263.9130434782609" width="28" height="106.08695652173913" rx="3" fill="#16a34a" opacity="0.85"/>
-<text x="532" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">09-21</text>
-<text x="587.4285714285714" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">09-28</text>
-<text x="642.8571428571429" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-05</text>
-<text x="698.2857142857142" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-12</text>
-<text x="753.7142857142858" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-19</text>
-<text x="809.1428571428571" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-26</text>
-<text x="864.5714285714286" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">11-02</text>
-<text x="920" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">11-09</text>
+<rect x="850.5714285714286" y="263.9130434782609" width="28" height="106.08695652173913" rx="3" fill="#16a34a" opacity="0.85"/>
+<rect x="906" y="348.7826086956522" width="28" height="21.217391304347814" rx="3" fill="#16a34a" opacity="0.85"/>
+<text x="532" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">09-28</text>
+<text x="587.4285714285714" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-05</text>
+<text x="642.8571428571429" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-12</text>
+<text x="698.2857142857142" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-19</text>
+<text x="753.7142857142858" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">10-26</text>
+<text x="809.1428571428571" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">11-02</text>
+<text x="864.5714285714286" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">11-09</text>
+<text x="920" y="386" font-size="10" fill="#9ca3af" text-anchor="middle">11-16</text>
 <rect x="24" y="420" width="444" height="196" rx="10" fill="#fff" stroke="#e5e7eb"/>
 <text x="38" y="444" font-size="13" font-weight="600" fill="#374151">변경 실패율 (%)</text>
 <line x1="64" y1="582" x2="452" y2="582" stroke="#f3f4f6"/>
@@ -88,16 +89,17 @@
 <text x="58" y="494.5" font-size="10" fill="#9ca3af" text-anchor="end">0.9</text>
 <line x1="64" y1="460" x2="452" y2="460" stroke="#f3f4f6"/>
 <text x="58" y="464" font-size="10" fill="#9ca3af" text-anchor="end">1.2</text>
-<polyline points="452,582" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="396.57142857142856,582 452,582" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="396.57142857142856" cy="582" r="3.5" fill="#dc2626"/>
 <circle cx="452" cy="582" r="3.5" fill="#dc2626"/>
-<text x="64" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">09-21</text>
-<text x="119.42857142857143" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">09-28</text>
-<text x="174.85714285714286" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-05</text>
-<text x="230.28571428571428" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-12</text>
-<text x="285.7142857142857" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-19</text>
-<text x="341.14285714285717" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-26</text>
-<text x="396.57142857142856" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">11-02</text>
-<text x="452" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">11-09</text>
+<text x="64" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">09-28</text>
+<text x="119.42857142857143" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-05</text>
+<text x="174.85714285714286" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-12</text>
+<text x="230.28571428571428" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-19</text>
+<text x="285.7142857142857" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-26</text>
+<text x="341.14285714285717" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">11-02</text>
+<text x="396.57142857142856" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">11-09</text>
+<text x="452" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">11-16</text>
 <rect x="492" y="420" width="444" height="196" rx="10" fill="#fff" stroke="#e5e7eb"/>
 <text x="506" y="444" font-size="13" font-weight="600" fill="#374151">MTTR (시간)</text>
 <line x1="532" y1="582" x2="920" y2="582" stroke="#f3f4f6"/>
@@ -110,13 +112,13 @@
 <text x="526" y="494.5" font-size="10" fill="#9ca3af" text-anchor="end">0.9</text>
 <line x1="532" y1="460" x2="920" y2="460" stroke="#f3f4f6"/>
 <text x="526" y="464" font-size="10" fill="#9ca3af" text-anchor="end">1.2</text>
-<text x="532" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">09-21</text>
-<text x="587.4285714285714" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">09-28</text>
-<text x="642.8571428571429" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-05</text>
-<text x="698.2857142857142" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-12</text>
-<text x="753.7142857142858" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-19</text>
-<text x="809.1428571428571" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-26</text>
-<text x="864.5714285714286" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">11-02</text>
-<text x="920" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">11-09</text>
+<text x="532" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">09-28</text>
+<text x="587.4285714285714" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-05</text>
+<text x="642.8571428571429" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-12</text>
+<text x="698.2857142857142" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-19</text>
+<text x="753.7142857142858" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">10-26</text>
+<text x="809.1428571428571" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">11-02</text>
+<text x="864.5714285714286" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">11-09</text>
+<text x="920" y="598" font-size="10" fill="#9ca3af" text-anchor="middle">11-16</text>
 <text x="24" y="628" font-size="11" fill="#9ca3af">Lead Time: 첫 커밋→병합 · Frequency: main 병합/배포 수 · CFR: 실패 배포 비율 · MTTR: incident/bug 이슈 해결 시간</text>
 </svg>

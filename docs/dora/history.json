@@ -82,5 +82,19 @@
       "deployments": 5,
       "incidents": 0
     }
+  },
+  {
+    "week": "2026-11-16",
+    "from": "2026-11-16T06:19:47.020Z",
+    "to": "2026-11-23T06:19:47.020Z",
+    "leadTimeHours": 0,
+    "deploymentFrequency": 1,
+    "changeFailureRate": 0,
+    "mttrHours": null,
+    "samples": {
+      "prs": 1,
+      "deployments": 1,
+      "incidents": 0
+    }
   }
 ]
